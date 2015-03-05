@@ -3,31 +3,22 @@ import java.util.Scanner;
 public class Tower 
 {
 	private Disc top;
-	Tower[] hanoi = new Tower[3];
+	
 	public Tower()
 	{
 		top = null;
 	}
-	public int pop() throws Exception
-	{
-		if(this.top == null)
-		{
-			throw new Exception("Empty Tower");
-		}
-		else
-		{
-			int valToReturn = this.top.getSize();
-			this.top = this.top.getNextDisc();
-			return valToReturn;
-		}
-	}
 	public void on() throws Exception
 	{
 		Scanner input = new Scanner(System.in);
-		/*addDisc(new Disc(3));
-		addDisc(new Disc(2));
-		addDisc(new Disc(1));
-		*/
+		Tower[] towerArray = new Tower[3];
+		towerArray[0] = new Tower();
+		towerArray[1] = new Tower();
+		towerArray[2] = new Tower();
+		towerArray[0].addDisc(new Disc(3));
+		towerArray[0].addDisc(new Disc(2));
+		towerArray[0].addDisc(new Disc(1));
+		
 		
 		while(true)
 		{
@@ -48,27 +39,25 @@ public class Tower
 			//should show the current state of the towers, you could show these one on top of another for simplicity
 			else if(val.equalsIgnoreCase("show"))
 			{
-				if(this.top == null)
+				for(int i = 0; i < towerArray.length; i++)
 				{
-					System.out.println("Empty Tower");
-				}
-				else
-				{
-					/*
-					 	for(int i = 0; i < hanoi.length; i++)
-						{
-							System.out.println("*******");
-							System.out.println(hanoi[i]);
-							System.out.println("***" + i +"***");
-						}
-					 */
-					Disc curr = this.top;
-					do
+					if(towerArray[i].top == null)
 					{
-						System.out.println(curr.getSize());
-						curr = curr.getNextDisc();
+						System.out.println("*******");
+						System.out.println("Empty tower");
 					}
-					while(curr != null);
+					else
+					{
+						System.out.println("*******");
+						Disc curr = towerArray[i].top;
+						//for (int j = 0; j < towerArray.length; j++)
+						while(curr != null)
+						{
+							System.out.println(curr.getSize());
+							curr = curr.getNextDisc();
+						}						
+					}
+					System.out.println("***" + i +"***");
 				}
 			}
 			//TYPED IN MOVE
@@ -91,10 +80,27 @@ public class Tower
 				//goes to next line, gets rid of any spaces
 				String toIndex = input.nextLine().trim();
 				
-				if(toIndex == null)
+				
+				if(towerArray[Integer.parseInt(toIndex)].top == null)
 				{
-					 hanoi[Integer.parseInt(fromIndex)].peek();
+					int temp = towerArray[Integer.parseInt(fromIndex)].removeDisc().getSize();
+					towerArray[Integer.parseInt(toIndex)].addDisc(new Disc(temp));
+					System.out.println("Successful Move");
 				}
+				else 
+				{
+					if(towerArray[Integer.parseInt(toIndex)].top.getSize() > towerArray[Integer.parseInt(fromIndex)].top.getSize())
+					{
+						int temp = towerArray[Integer.parseInt(fromIndex)].removeDisc().getSize();
+						towerArray[Integer.parseInt(toIndex)].addDisc(new Disc(temp));
+						System.out.println("Successful Move");
+					}
+					else
+					{
+						System.out.println("Failure to move");
+					}
+				}
+				
 			}
 		}
 	}
