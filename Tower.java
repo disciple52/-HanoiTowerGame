@@ -3,16 +3,10 @@ import java.util.Scanner;
 public class Tower 
 {
 	private Disc top;
-	private Disc top1;
-	private Disc top2;
-	private Disc top3;
-	
+	Tower[] hanoi = new Tower[3];
 	public Tower()
 	{
 		top = null;
-		top1 = null;
-		top2 = null;
-		top3 = null;
 	}
 	public int pop() throws Exception
 	{
@@ -30,9 +24,10 @@ public class Tower
 	public void on() throws Exception
 	{
 		Scanner input = new Scanner(System.in);
-		addDisc(new Disc(3));
+		/*addDisc(new Disc(3));
 		addDisc(new Disc(2));
-		addDisc(new Disc(1));;
+		addDisc(new Disc(1));
+		*/
 		
 		while(true)
 		{
@@ -59,6 +54,14 @@ public class Tower
 				}
 				else
 				{
+					/*
+					 	for(int i = 0; i < hanoi.length; i++)
+						{
+							System.out.println("*******");
+							System.out.println(hanoi[i]);
+							System.out.println("***" + i +"***");
+						}
+					 */
 					Disc curr = this.top;
 					do
 					{
@@ -88,26 +91,9 @@ public class Tower
 				//goes to next line, gets rid of any spaces
 				String toIndex = input.nextLine().trim();
 				
-				if(toIndex == "0")
+				if(toIndex == null)
 				{
-					 if(toIndex == null)
-					 {
-						 
-					 }
-				}
-				if(toIndex == "1")
-				{
-					 if(toIndex == null)
-					 {
-						 
-					 }
-				}
-				if(toIndex == "2")
-				{
-					 if(toIndex == null)
-					 {
-						 
-					 }
+					 hanoi[Integer.parseInt(fromIndex)].peek();
 				}
 			}
 		}
